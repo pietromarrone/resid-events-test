@@ -84,5 +84,5 @@ curl http://localhost:8888/events --verbose
 Expected result can be seen below. Remember that it takes time to publish and read domain events from Kafka. Hence a Events might be not immedietly seen:
 
 ```
-[{"receivedAt":"2019-03-29T10:33:01.264Z","producedAt":"2019-03-29T10:33:01.095Z","text":"testo del messaggio"}]
+[{"receivedAt":"2019-03-29T13:11:28.607Z","producedAt":"2019-03-29T13:11:28.466Z","text":"Testo dell Evento","latency":"141(ms)"}]
 ```

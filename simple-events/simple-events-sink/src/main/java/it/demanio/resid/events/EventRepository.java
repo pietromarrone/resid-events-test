@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 /**
  * Mock Stateless Repository Utilizzato per non avere dipendenze da alcun
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  *
  * @author pmarrone
  */
-@Service
+@Component
 public class EventRepository {
 
 	private List<EventReceived> events = new ArrayList<>();
