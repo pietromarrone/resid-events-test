@@ -8,10 +8,11 @@ What things you need to run the software:
 
 -   Java 8+
 -   [docker-compose](https://docs.docker.com/compose/)
+-   [Postman collection](https://www.getpostman.com/collections/6071ab6ca5838d60f5d8): contiene tutti gli Endpoint
 
 ## Getting Started
 
-Tutti i moduli possono essere buildati con:
+Tutti i moduli possono essere buildati in una unica istruzione con:
 
 ```
 ./mvnw package
@@ -19,7 +20,12 @@ Tutti i moduli possono essere buildati con:
 
 ## Simple Events
 
-Code can be found under [simple-events](simple-events) Module.
+Code can be found under [simple-events](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events) Module.
+
+Contiene due servizi:
+
+-   [simple-events-source](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events/simple-events-source): Event Producer
+-   [simple-events-sink](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events/simple-events-sink): Event Consumer
 
 Additional components:
 
@@ -37,7 +43,6 @@ Build Docker images:
 
 ```
 docker-compose build
-
 ```
 
 Run the whole infrastructure:
@@ -55,7 +60,19 @@ docker-compose up --build
 Pubblicare un evento:
 
 ```
-curl localhost:8080/publish -X POST --header 'Content-Type: application/json' -d '{"text":"testo del messaggio"}' --verbose
+curl localhost:8080/publish -X POST --header 'Content-Type: application/json' -d '{"text":"Evento Singolo"}' --verbose
+```
+
+Pubblicare più eventi:
+
+```
+curl localhost:8080/publish/3 -X POST --header 'Content-Type: application/json' -d '{"text":"Evento Multiplo"}' --verbose
+```
+
+Pubblicare più eventi con sleep (ms):
+
+```
+curl localhost:8080/publish/3/sleep/5000 -X POST --header 'Content-Type: application/json' -d '{"text":"Evento Multiplo con Sleep"}' --verbose
 ```
 
 Leggere messaggi ricevuti (notifce a different port: **8888**!):

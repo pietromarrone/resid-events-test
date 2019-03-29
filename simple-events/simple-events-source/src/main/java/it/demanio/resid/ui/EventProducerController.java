@@ -1,6 +1,8 @@
 package it.demanio.resid.ui;
 
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.LongStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController()
-class EventsReceivedController {
+public class EventProducerController {
 
 	@Autowired
 	DomainEventPublisher publisher;
@@ -28,21 +30,48 @@ class EventsReceivedController {
 	}
 
 	@PostMapping("publish")
-	ResponseEntity<Void> send(@RequestBody EventDto eventDto) {
-		log.info("Sending Event {}", eventDto);
-		publisher.publish(new Event(UUID.randomUUID(), eventDto.getText()));
+	ResponseEntity<Void> sendOne(@RequestBody EventDto eventDto) {
+		log.info("publish: {}", eventDto);
 
+		Event e = new Event(UUID.randomUUID(), eventDto.getText());
+		log.info("Sending Event {}", e);
+
+		publisher.publish(e);
 		return ResponseEntity.ok().build();
 	}
 
 	@PostMapping("publish/{num}")
-	ResponseEntity<Void> send(@PathVariable int num, @RequestBody EventDto eventDto) {
-		log.info("Sending {} Events as {}", num, eventDto);
-		for (int i = 0; i < num; i++) {
-			publisher.publish(new Event(UUID.randomUUID(), num + "-" + eventDto.getText()));
-		}
+	ResponseEntity<Void> sendMany(@PathVariable long num, @RequestBody EventDto eventDto) {
+		log.info("publish/{}: {}", num, eventDto);
+
+		new Thread(() -> {
+			LongStream.range(0, num).forEach(i -> {
+				Event e = new Event(UUID.randomUUID(), i + "-" + eventDto.getText());
+				log.info("Sending {} Event {}", i, e);
+				publisher.publish(e);
+			});
+		}).start();
 
 		return ResponseEntity.ok().build();
 	}
 
+	@PostMapping("publish/{num}/sleep/{sleep}")
+	ResponseEntity<Void> sendManyWithSleep(@PathVariable long num, @PathVariable long sleep,
+			@RequestBody EventDto eventDto) throws InterruptedException {
+		log.info("publish/{}/sleep/{}: {}", num, sleep, eventDto);
+
+		new Thread(() -> {
+			LongStream.range(0, num).forEach(i -> {
+				try {
+					TimeUnit.MILLISECONDS.sleep(sleep);
+				} catch (InterruptedException e) {
+				}
+				Event e = new Event(UUID.randomUUID(), i + "-" + eventDto.getText());
+				log.info("Sending {} Event {} with sleep {}", i, e, sleep);
+				publisher.publish(e);
+			});
+		}).start();
+
+		return ResponseEntity.ok().build();
+	}
 }

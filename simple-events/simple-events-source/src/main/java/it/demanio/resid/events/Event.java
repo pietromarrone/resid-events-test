@@ -3,9 +3,13 @@ package it.demanio.resid.events;
 import java.time.Instant;
 import java.util.UUID;
 
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.ToString;
 
 @Getter
+@ToString
+@EqualsAndHashCode
 public class Event implements DomainEvent {
 
 	private UUID eventId;
