@@ -1,6 +1,6 @@
 # Tests
 
-Una serie di servizi minimali, destinati a testare specifici aspetti della architettura Resid
+Una serie di servizi minimali, destinati a testare specifici aspetti, magari critici, della architettura Resid
 
 ### Prerequisites
 
@@ -14,7 +14,7 @@ What things you need to run the software:
 Tutti i moduli possono essere buildati con:
 
 ```
-./mvnw clean package
+./mvnw package
 ```
 
 ## Simple Events
@@ -23,70 +23,49 @@ Code can be found under [simple-events](simple-events) Module.
 
 Additional components:
 
--   Kafka
-
-Additional components:
-
--   H2 DB to keep credit cards.
--   [MongoDB](https://www.mongodb.com/what-is-mongodb) to keep withdrawals.
--   Spring Data Reactive MongoDb to reactively talk to Mongo
--   [Project Reactor](http://projectreactor.io) to serve non-blocking web-service
 -   [Apache Kafka](https://kafka.apache.org) for pub/sub for domain events
+-   [Apache ZooKeeper](https://zookeeper.apache.org/) ZooKeeper is a centralized service for maintaining configuration information
 -   [Spring Cloud Stream](https://cloud.spring.io/spring-cloud-stream/) to read/write messages from/to Kafka’s topic.
 
-Running the app, remember to be in **root** of the project:
+Build the whole infrastructure:
 
--   Run the whole infrastructure:
+```
+./mvnw package
+```
+
+Build Docker images:
+
+```
+docker-compose build
+
+```
+
+Run the whole infrastructure:
 
 ```
 docker-compose up
 ```
 
-A sample _Withdraw_ command:
+oppure in unica istruzione
 
 ```
-curl localhost:8080/withdrawals -X POST --header 'Content-Type: application/json' -d '{"card":"3a3e99f0-5ad9-47fa-961d-d75fab32ef0e", "amount": 10.00}' --verbose
+docker-compose up --build
 ```
 
-Verifed by a query (notifce a different port: **8888**!):
+Pubblicare un evento:
 
 ```
-curl http://localhost:8888/withdrawals?cardId=3a3e99f0-5ad9-47fa-961d-d75fab32ef0e --verbose
+curl localhost:8080/publish -X POST --header 'Content-Type: application/json' -d '{"text":"testo del messaggio"}' --verbose
 ```
 
-Expected result can be seen below. Remember that it takes time to publish and read domain events from Kafka. Hence a withdrawal might be not immedietly seen:
+Leggere messaggi ricevuti (notifce a different port: **8888**!):
 
 ```
-[{"amount":10.00}]
+curl http://localhost:8888/events --verbose
 ```
 
-Architecture overview:
+Expected result can be seen below. Remember that it takes time to publish and read domain events from Kafka. Hence a Events might be not immedietly seen:
 
-![events](https://github.com/ddd-by-examples/all-things-cqrs/blob/master/events.jpg)
-
-Since it is not recommended to test 2 microservices in one test, there is no E2E test that verifies commands and queries. But we can test if a message arrival in Kafka's topic results in a proper withdrawal created. The code is [here](https://github.com/ddd-by-examples/all-things-cqrs/blob/master/with-events/with-events-sink/src/test/java/io/dddbyexamples/cqrs/sink/ReadModelUpdaterTest.java):
-
-```java
-    @Test
-    public void shouldSeeWithdrawalAfterGettingAnEvent() {
-        //when
-        anEventAboutWithdrawalCame(TEN, cardID);
-
-        //then
-        thereIsOneWithdrawalOf(TEN, cardID);
-    }
 ```
-
-Also it is possible to test if a successful withdrawal is followed eventually by a proper domain event publication. The code is [here](https://github.com/ddd-by-examples/all-things-cqrs/blob/master/with-events/with-events-source/src/test/java/io/dddbyexamples/cqrs/EventsPublishingTest.java).
-
-```java
-    @Test
-    public void shouldEventuallySendAnEventAboutCardWithdrawal() throws IOException {
-        // given
-        UUID cardUUid = thereIsCreditCardWithLimit(new BigDecimal(100));
-        // when
-        clientWantsToWithdraw(TEN, cardUUid);
-        // then
-        await().atMost(FIVE_SECONDS).until(() -> eventAboutWithdrawalWasSent(TEN, cardUUid));
-    }
+[{"receivedAt":"2019-03-29T10:33:01.264Z","producedAt":"2019-03-29T10:33:01.095Z","text":"testo del messaggio"}]
 ```
