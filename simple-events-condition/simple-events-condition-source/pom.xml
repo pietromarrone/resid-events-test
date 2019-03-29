@@ -10,7 +10,7 @@
         <!-- lookup parent from repository -->
     </parent>
     <groupId>it.demanio.resid</groupId>
-    <artifactId>simple-events-source</artifactId>
+    <artifactId>simple-events-condition-source</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <description>Demo project for Spring Boot</description>
 

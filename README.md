@@ -57,6 +57,12 @@ oppure in unica istruzione
 docker-compose up --build
 ```
 
+ancora per i più pigri
+
+```
+./mvnw package && docker-compose up --build
+```
+
 Pubblicare un evento:
 
 ```
