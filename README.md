@@ -4,16 +4,24 @@ Una serie di servizi minimali, destinati a testare specifici aspetti della archi
 
 A bunch of ways of doing [CQRS](https://martinfowler.com/bliki/CQRS.html) with various [Spring](https://spring.io) tools.
 
-## Getting Started
-
-These instructions will get you and overview of how to synchronize two different datasources. We will do so by separating command and queries in a simple CQRS app. Each module represents a different way of introducing this pattern. Also, each module is a standalone [Spring Boot](https://spring.io/projects/spring-boot) application.
-
 ### Prerequisites
 
 What things you need to run the software:
 
 -   Java 8+
 -   [docker-compose](https://docs.docker.com/compose/)
+
+## simple-events
+
+Modulo [simple-events](simple-events).
+
+### Prerequisites
+
+-   Kafka
+
+## Getting Started
+
+These instructions will get you and overview of how to synchronize two different datasources. We will do so by separating command and queries in a simple CQRS app. Each module represents a different way of introducing this pattern. Also, each module is a standalone [Spring Boot](https://spring.io/projects/spring-boot) application.
 
 ## Overview
 
