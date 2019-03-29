@@ -1,4 +1,4 @@
-package it.demanio.resid.ui.dto;
+package it.demanio.resid.dto;
 
 import lombok.Data;
 
