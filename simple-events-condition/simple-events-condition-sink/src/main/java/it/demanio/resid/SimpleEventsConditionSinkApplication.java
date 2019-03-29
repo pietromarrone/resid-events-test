@@ -45,6 +45,13 @@ public class SimpleEventsConditionSinkApplication {
 		eventRepository.addB(event);
 	}
 
+//	@StreamListener(target = Sink.INPUT)
+//	public void onOther(EventReceived event) {
+//		event.received();
+//
+//		log.info("Event TYPE-OTHER received {}", event);
+//	}
+
 	// Rest Controller
 	@GetMapping
 	String hello() {

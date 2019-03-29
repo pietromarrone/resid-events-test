@@ -92,3 +92,78 @@ Expected result can be seen below. Remember that it takes time to publish and re
 ```
 [{"receivedAt":"2019-03-29T13:11:28.607Z","producedAt":"2019-03-29T13:11:28.466Z","text":"Testo dell Evento","latency":"141(ms)"}]
 ```
+
+## Simple Events Condition
+
+Code can be found under [simple-events-condition](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition) Module.
+
+Contiene due servizi:
+
+-   [simple-events-condition-source](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition/simple-events-condition-source): Event Producer, produce eventi con Type: [TYPE-A|TYPE-B|TYPE-OTHER]
+-   [simple-events-condition-sink](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition/simple-events-condition-sink): Event Consumer, consuma solo eventi di tipo [TYPE-A|TYPE-B] mentre scarta gli altri
+
+Additional components:
+
+-   [Apache Kafka](https://kafka.apache.org) for pub/sub for domain events
+-   [Apache ZooKeeper](https://zookeeper.apache.org/) ZooKeeper is a centralized service for maintaining configuration information
+-   [Spring Cloud Stream](https://cloud.spring.io/spring-cloud-stream/) to read/write messages from/to Kafka’s topic.
+
+Build the whole infrastructure:
+
+```
+./mvnw package
+```
+
+Build Docker images:
+
+```
+docker-compose build
+```
+
+Run the whole infrastructure:
+
+```
+docker-compose up
+```
+
+oppure in unica istruzione
+
+```
+docker-compose up --build
+```
+
+ancora per i più pigri
+
+```
+./mvnw package && docker-compose up --build
+```
+
+Pubblicare un evento:
+
+```
+curl localhost:8080/publish -X POST --header 'Content-Type: application/json' -d '{"text":"Evento Singolo"}' --verbose
+```
+
+Pubblicare più eventi:
+
+```
+curl localhost:8080/publish/3 -X POST --header 'Content-Type: application/json' -d '{"text":"Evento Multiplo"}' --verbose
+```
+
+Pubblicare più eventi con sleep (ms):
+
+```
+curl localhost:8080/publish/3/sleep/5000 -X POST --header 'Content-Type: application/json' -d '{"text":"Evento Multiplo con Sleep"}' --verbose
+```
+
+Leggere messaggi ricevuti (notifce a different port: **8888**!):
+
+```
+curl http://localhost:8888/events --verbose
+```
+
+Expected result can be seen below. Remember that it takes time to publish and read domain events from Kafka. Hence a Events might be not immedietly seen:
+
+```
+[{"receivedAt":"2019-03-29T13:11:28.607Z","producedAt":"2019-03-29T13:11:28.466Z","text":"Testo dell Evento","latency":"141(ms)"}]
+```
