@@ -12,11 +12,14 @@ import lombok.ToString;
 @EqualsAndHashCode
 public class EventB implements DomainEvent {
 
+	private String id;
 	private UUID eventId;
 	private Instant producedAt;
 	private String text;
+	private String sender = "SimpleConsumerConditionSource";
 
 	public EventB(UUID eventId, String text) {
+		this.id = UUID.randomUUID().toString();
 		this.eventId = eventId;
 		this.text = text;
 		this.producedAt = Instant.now();

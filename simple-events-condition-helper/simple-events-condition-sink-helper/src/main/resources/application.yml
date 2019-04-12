@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8888
 
 spring:
   cloud:
@@ -11,6 +11,7 @@ spring:
         input:
           destination: events
           contentType: application/json
+          group: sink
         output:
           destination: events
           contentType: application/json

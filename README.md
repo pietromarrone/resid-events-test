@@ -18,26 +18,11 @@ Tutti i moduli possono essere buildati in una unica istruzione con:
 ./mvnw package
 ```
 
-## Simple Events
+Nella cartella di ciascun singolo progetto:
 
-Code can be found under [simple-events](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events) Module.
-
-Contiene due servizi:
-
--   [simple-events-source](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events/simple-events-source): Event Producer
--   [simple-events-sink](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events/simple-events-sink): Event Consumer
-
-Additional components:
-
--   [Apache Kafka](https://kafka.apache.org) for pub/sub for domain events
--   [Apache ZooKeeper](https://zookeeper.apache.org/) ZooKeeper is a centralized service for maintaining configuration information
--   [Spring Cloud Stream](https://cloud.spring.io/spring-cloud-stream/) to read/write messages from/to Kafka’s topic.
-
-Build the whole infrastructure:
-
-```
-./mvnw package
-```
+-   [simple-events](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events)
+-   [simple-events-condition](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition)
+-   [simple-events-condition-helper](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition-helper)
 
 Build Docker images:
 
@@ -62,6 +47,23 @@ ancora per i più pigri
 ```
 ./mvnw package && docker-compose up --build
 ```
+
+## Simple Events
+
+Testa l'invio e la ricezione di Eventi tramite Kafka senza alcun filtro tramite il topic **events**
+
+Code can be found under [simple-events](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events) Module.
+
+Contiene due servizi:
+
+-   [simple-events-source](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events/simple-events-source): Event Producer
+-   [simple-events-sink](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events/simple-events-sink): Event Consumer
+
+Additional components:
+
+-   [Apache Kafka](https://kafka.apache.org) for pub/sub for domain events
+-   [Apache ZooKeeper](https://zookeeper.apache.org/) ZooKeeper is a centralized service for maintaining configuration information
+-   [Spring Cloud Stream](https://cloud.spring.io/spring-cloud-stream/) to read/write messages from/to Kafka’s topic.
 
 Pubblicare un evento:
 
@@ -93,9 +95,14 @@ Expected result can be seen below. Remember that it takes time to publish and re
 [{"receivedAt":"2019-03-29T13:11:28.607Z","producedAt":"2019-03-29T13:11:28.466Z","text":"Testo dell Evento","latency":"141(ms)"}]
 ```
 
-## Simple Events Condition
+## Simple Events Condition & Simple Events Condition Helper
 
-Code can be found under [simple-events-condition](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition) Module.
+Testa l'invio e la ricezione di Eventi tramite Kafka senza con filtri tramite il topic **events**, la versione helper ha le stesse funzionalità ma utilizza la libreria **events-helper**
+
+Code can be found under:
+
+-   [simple-events-condition](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition) Module
+-   [simple-events-condition-helper](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition-helper) Module.
 
 Contiene due servizi:
 
@@ -108,40 +115,18 @@ Additional components:
 -   [Apache ZooKeeper](https://zookeeper.apache.org/) ZooKeeper is a centralized service for maintaining configuration information
 -   [Spring Cloud Stream](https://cloud.spring.io/spring-cloud-stream/) to read/write messages from/to Kafka’s topic.
 
-Build the whole infrastructure:
-
-```
-./mvnw package
-```
-
-Build Docker images:
-
-```
-docker-compose build
-```
-
-Run the whole infrastructure:
-
-```
-docker-compose up
-```
-
-oppure in unica istruzione
-
-```
-docker-compose up --build
-```
-
-ancora per i più pigri
-
-```
-./mvnw package && docker-compose up --build
-```
-
 Pubblicare un evento:
 
 ```
-curl localhost:8080/publish -X POST --header 'Content-Type: application/json' -d '{"text":"Evento Singolo"}' --verbose
+curl localhost:8080/publish -X POST --header 'Content-Type: application/json' -d '{"type":"TYPE-A","text":"Evento Singolo"}' --verbose
+```
+
+```
+curl localhost:8080/publish -X POST --header 'Content-Type: application/json' -d '{"type":"TYPE-B","text":"Evento Singolo"}' --verbose
+```
+
+```
+curl localhost:8080/publish -X POST --header 'Content-Type: application/json' -d '{"type":"TYPE-OTHER","text":"Evento Singolo"}' --verbose
 ```
 
 Pubblicare più eventi:

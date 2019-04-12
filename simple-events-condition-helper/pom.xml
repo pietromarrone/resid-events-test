@@ -4,19 +4,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>it.demanio.resid</groupId>
-    <artifactId>resid-test</artifactId>
+    <artifactId>simple-events-condition-helper</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <description>Tests for Resid Architecture</description>
-
     <modules>
-        <module>simple-events</module>
-        <module>simple-events-condition</module>
-        
-        <module>simple-events-condition-helper</module>
-        
-        
+        <module>simple-events-condition-sink-helper</module>
+        <module>simple-events-condition-source-helper</module>
     </modules>
-
 </project>

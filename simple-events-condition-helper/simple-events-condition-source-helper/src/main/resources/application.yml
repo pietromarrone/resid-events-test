@@ -11,6 +11,7 @@ spring:
         input:
           destination: events
           contentType: application/json
+          group: sink
         output:
           destination: events
           contentType: application/json

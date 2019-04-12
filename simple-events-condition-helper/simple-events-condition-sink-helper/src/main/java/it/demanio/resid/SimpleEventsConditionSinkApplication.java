@@ -5,20 +5,22 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.cloud.stream.messaging.Sink;
+import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.resid.events.annotation.EventHandler;
+import com.resid.events.configuration.EventHandlerConfiguration;
+
 import it.demanio.resid.events.EventReceived;
 import it.demanio.resid.events.EventRepository;
+import it.demanio.resid.events.PayloadOther;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
 @SpringBootApplication
-@EnableBinding(Sink.class)
+@Import(EventHandlerConfiguration.class)
 public class SimpleEventsConditionSinkApplication {
 
 	@Autowired
@@ -29,33 +31,35 @@ public class SimpleEventsConditionSinkApplication {
 	}
 
 	// Event Consumer
-	@StreamListener(target = Sink.INPUT, condition = "headers['type'] == 'TYPE-A'")
-	public void onEventA(EventReceived event) {
+	@EventHandler(eventType = "TYPE-A")
+	public void onEventA(EventReceived<String> event) {
 		event.received();
 
-		log.info("Event TYPE-A received {}", event);
+		String payload = event.getPayload();
+		String sender = event.getSender();
+
+		log.info("Event TYPE-A received {} from {}, with payload {}", event, sender, payload);
 		eventRepository.addA(event);
 	}
 
-	@StreamListener(target = Sink.INPUT, condition = "headers['type'] == 'TYPE-B'")
-	public void onEventB(EventReceived event) {
+	@EventHandler(eventType = "TYPE-B")
+	public void onEventB(EventReceived<String> event) {
 		event.received();
 
 		log.info("Event TYPE-B received {}", event);
 		eventRepository.addB(event);
 	}
 
-//	@StreamListener(target = Sink.INPUT)
-//	public void onOther(EventReceived event) {
-//		event.received();
-//
-//		log.info("Event TYPE-OTHER received {}", event);
-//	}
+	@EventHandler(eventType = "TYPE-OTHER")
+	public void onOther(PayloadOther event) {
+
+		log.info("Event TYPE-OTHER received {}", event);
+	}
 
 	// Rest Controller
 	@GetMapping
 	String hello() {
-		return "Hello from Simple Events Sink Condition (Consumer)";
+		return "Hello from Simple Events Sink (Consumer)";
 	}
 
 	@GetMapping("events/a")

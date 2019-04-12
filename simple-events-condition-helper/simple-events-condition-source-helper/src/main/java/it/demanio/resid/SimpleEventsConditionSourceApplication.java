@@ -1,12 +1,12 @@
 package it.demanio.resid;
 
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.LongStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.resid.events.DomainEvent;
+import com.resid.events.configuration.EventProducerConfiguration;
+import com.resid.events.publisher.DomainEventPublisher;
+
 import it.demanio.resid.dto.EventDto;
-import it.demanio.resid.events.DomainEvent;
-import it.demanio.resid.events.DomainEventPublisher;
 import it.demanio.resid.events.EventA;
 import it.demanio.resid.events.EventB;
 import it.demanio.resid.events.EventOther;
@@ -25,6 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @RestController
 @SpringBootApplication
+@Import(EventProducerConfiguration.class)
 public class SimpleEventsConditionSourceApplication {
 
 	@Autowired
@@ -37,7 +40,7 @@ public class SimpleEventsConditionSourceApplication {
 	// Rest Controller
 	@GetMapping
 	String hello() {
-		return "Hello from Simple Events Source Condition (Producer)";
+		return "Hello from Simple Events Source (Producer)";
 	}
 
 	@PostMapping("publish")
@@ -45,9 +48,9 @@ public class SimpleEventsConditionSourceApplication {
 		log.info("publish: {}", eventDto);
 
 		DomainEvent e = eventFactory(eventDto);
-		log.info("Sending Event {}", e);
-
 		publisher.publish(e);
+
+		log.info("Sending Event {}", e);
 		return ResponseEntity.ok().build();
 	}
 
@@ -89,11 +92,17 @@ public class SimpleEventsConditionSourceApplication {
 	private DomainEvent eventFactory(EventDto eventDto) {
 		switch (eventDto.getType()) {
 		case "TYPE-A":
-			return new EventA(UUID.randomUUID(), eventDto.getText());
+			return new EventA(eventDto.getText());
 		case "TYPE-B":
-			return new EventB(UUID.randomUUID(), eventDto.getText());
+			return new EventB(eventDto.getText());
 		default:
-			return new EventOther(UUID.randomUUID(), eventDto.getText());
+			EventOther other = new EventOther();
+			other.setMessageType("TYPE-OTHER");
+			other.setSender("Anonymous");
+			other.setNome("Nome " + eventDto.getText());
+			other.setCognome("Cognome " + eventDto.getText());
+			other.setCodiceFiscale("Codice Fiscale " + eventDto.getText());
+			return other;
 		}
 	}
 
