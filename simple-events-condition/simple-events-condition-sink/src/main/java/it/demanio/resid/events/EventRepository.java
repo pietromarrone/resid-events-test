@@ -17,27 +17,27 @@ import org.springframework.stereotype.Component;
 @Component
 public class EventRepository {
 
-	private Map<String, List<EventReceived>> eventsMap;
+	private Map<String, List<Object>> eventsMap;
 
 	EventRepository() {
 		eventsMap = new HashMap<>();
-		eventsMap.put("A", new ArrayList<EventReceived>());
-		eventsMap.put("B", new ArrayList<EventReceived>());
+		eventsMap.put("A", new ArrayList<>());
+		eventsMap.put("B", new ArrayList<>());
 	}
 
-	public boolean addA(EventReceived event) {
+	public boolean addA(Object event) {
 		return eventsMap.get("A").add(event);
 	}
 
-	public boolean addB(EventReceived event) {
+	public boolean addB(Object event) {
 		return eventsMap.get("B").add(event);
 	}
 
-	public List<EventReceived> findAllEventsA() {
+	public List<Object> findAllEventsA() {
 		return Collections.unmodifiableList(eventsMap.get("A"));
 	}
 
-	public List<EventReceived> findAllEventsB() {
+	public List<Object> findAllEventsB() {
 		return Collections.unmodifiableList(eventsMap.get("B"));
 	}
 }

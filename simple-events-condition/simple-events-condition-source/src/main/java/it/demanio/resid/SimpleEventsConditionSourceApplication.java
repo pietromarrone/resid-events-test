@@ -1,6 +1,7 @@
 package it.demanio.resid;
 
-import java.util.UUID;
+import static it.demanio.resid.events.EventHeaderBuilder.headerBuilder;
+
 import java.util.concurrent.TimeUnit;
 import java.util.stream.LongStream;
 
@@ -19,7 +20,8 @@ import it.demanio.resid.events.DomainEvent;
 import it.demanio.resid.events.DomainEventPublisher;
 import it.demanio.resid.events.EventA;
 import it.demanio.resid.events.EventB;
-import it.demanio.resid.events.EventOther;
+import it.demanio.resid.events.EventHeader;
+import it.demanio.resid.events.EventWithoutHeader;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -45,9 +47,13 @@ public class SimpleEventsConditionSourceApplication {
 		log.info("publish: {}", eventDto);
 
 		DomainEvent e = eventFactory(eventDto);
-		log.info("Sending Event {}", e);
+		if (e != null) {
+			log.info("Sending Event {}", e);
+			publisher.publish(e);
+		} else {
+			sendWithHeader(eventDto);
+		}
 
-		publisher.publish(e);
 		return ResponseEntity.ok().build();
 	}
 
@@ -58,8 +64,12 @@ public class SimpleEventsConditionSourceApplication {
 		new Thread(() -> {
 			LongStream.range(0, num).forEach(i -> {
 				DomainEvent e = eventFactory(eventDto);
-				log.info("Sending {} Event {}", i, e);
-				publisher.publish(e);
+				if (e != null) {
+					log.info("Sending Event {}", e);
+					publisher.publish(e);
+				} else {
+					sendWithHeader(eventDto);
+				}
 			});
 		}).start();
 
@@ -78,8 +88,12 @@ public class SimpleEventsConditionSourceApplication {
 				} catch (InterruptedException e) {
 				}
 				DomainEvent e = eventFactory(eventDto);
-				log.info("Sending {} Event {} with sleep {}", i, e, sleep);
-				publisher.publish(e);
+				if (e != null) {
+					log.info("Sending Event {}", e);
+					publisher.publish(e);
+				} else {
+					sendWithHeader(eventDto);
+				}
 			});
 		}).start();
 
@@ -89,12 +103,27 @@ public class SimpleEventsConditionSourceApplication {
 	private DomainEvent eventFactory(EventDto eventDto) {
 		switch (eventDto.getType()) {
 		case "TYPE-A":
-			return new EventA(UUID.randomUUID(), eventDto.getText());
+			return new EventA(eventDto.getText());
 		case "TYPE-B":
-			return new EventB(UUID.randomUUID(), eventDto.getText());
+			return new EventB(eventDto.getText());
 		default:
-			return new EventOther(UUID.randomUUID(), eventDto.getText());
+			return null;
 		}
+	}
+
+	private void sendWithHeader(EventDto eventDto) {
+		EventWithoutHeader other = new EventWithoutHeader();
+		other.setNome("Nome " + eventDto.getText());
+		other.setCognome("Cognome " + eventDto.getText());
+		other.setCodiceFiscale("Codice Fiscale " + eventDto.getText());
+
+		EventHeader header = headerBuilder() //
+				.eventType("TYPE-OTHER") //
+				.sender("SimpleConsumerConditionSource") //
+				.build();
+
+		log.info("Sending Event {} with Header {}", other, header);
+		publisher.publish(header, other);
 	}
 
 }

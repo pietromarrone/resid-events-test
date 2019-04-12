@@ -15,6 +15,7 @@ import com.resid.events.configuration.EventHandlerConfiguration;
 import it.demanio.resid.events.EventReceived;
 import it.demanio.resid.events.EventRepository;
 import it.demanio.resid.events.PayloadOther;
+import it.demanio.resid.events.PayloadText;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -32,43 +33,48 @@ public class SimpleEventsConditionSinkApplication {
 
 	// Event Consumer
 	@EventHandler(eventType = "TYPE-A")
-	public void onEventA(EventReceived<String> event) {
-		event.received();
+	public void onEventA(PayloadText event) {
+		EventReceived<PayloadText> er = new EventReceived<PayloadText>();
+		er.setPayload(event);
+		er.setTimestamp(event.getTimestamp());
 
-		String payload = event.getPayload();
-		String sender = event.getSender();
-
-		log.info("Event TYPE-A received {} from {}, with payload {}", event, sender, payload);
-		eventRepository.addA(event);
+		log.info("Event TYPE-A received {}", event);
+		eventRepository.addA(er);
 	}
 
 	@EventHandler(eventType = "TYPE-B")
-	public void onEventB(EventReceived<String> event) {
-		event.received();
+	public void onEventB(PayloadText event) {
+		EventReceived<PayloadText> er = new EventReceived<PayloadText>();
+		er.setPayload(event);
+		er.setTimestamp(event.getTimestamp());
 
 		log.info("Event TYPE-B received {}", event);
-		eventRepository.addB(event);
+		eventRepository.addB(er);
 	}
 
 	@EventHandler(eventType = "TYPE-OTHER")
 	public void onOther(PayloadOther event) {
-
 		log.info("Event TYPE-OTHER received {}", event);
 	}
+
+//	@EventHandler(eventType = "TYPE-OTHER")
+//	public void onOther(Message<PayloadOther> event) {
+//		log.info("Event TYPE-OTHER received with Payload {}, and Header {}", event.getPayload(), event.getHeaders());
+//	}
 
 	// Rest Controller
 	@GetMapping
 	String hello() {
-		return "Hello from Simple Events Sink (Consumer)";
+		return "Hello from Simple Events Sink Helper (Consumer)";
 	}
 
 	@GetMapping("events/a")
-	List<EventReceived> getAllEventsA() {
+	List<Object> getAllEventsA() {
 		return eventRepository.findAllEventsA();
 	}
 
 	@GetMapping("events/b")
-	List<EventReceived> getAllEventsB() {
+	List<Object> getAllEventsB() {
 		return eventRepository.findAllEventsB();
 	}
 

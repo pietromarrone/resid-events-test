@@ -19,8 +19,14 @@ public class KafkaDomainEventPublisher implements DomainEventPublisher {
 
 	@Override
 	public void publish(DomainEvent domainEvent) {
+		publish(domainEvent.getHeader(), domainEvent);
+	}
+
+	@Override
+	public void publish(EventHeader header, Object domainEvent) {
 		Map<String, Object> headers = new HashMap<>();
-		headers.put("type", domainEvent.getType());
+		headers.put("resid_type", header.getEventType());
+		headers.put("resid_sender", header.getSender());
 		output.send(new GenericMessage<>(domainEvent, headers));
 	}
 

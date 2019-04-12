@@ -10,6 +10,14 @@ What things you need to run the software:
 -   [docker-compose](https://docs.docker.com/compose/)
 -   [Postman collection](https://www.getpostman.com/collections/6071ab6ca5838d60f5d8): contiene tutti gli Endpoint
 
+Nella folder docker-compose trovi alcuni Docker file per task comuni, per lanciarli occorre:
+
+```
+    docker-compose -f docker-compose/[NOME-FILE.yml] up -d
+```
+
+-   [kafka-exposed](http://gitlab.demaniodg.it/RESID/tests/tree/master/docker-compose/kafka-exposed.yml) lancia Kafka e lo espone al Host sulla porta standard.
+
 ## Getting Started
 
 Tutti i moduli possono essere buildati in una unica istruzione con:
@@ -83,10 +91,16 @@ Pubblicare più eventi con sleep (ms):
 curl localhost:8080/publish/3/sleep/5000 -X POST --header 'Content-Type: application/json' -d '{"text":"Evento Multiplo con Sleep"}' --verbose
 ```
 
-Leggere messaggi ricevuti (notifce a different port: **8888**!):
+Leggere messaggi ricevuti di tipo: **_TIPE-A_** (notifce a different port: **8888**!):
 
 ```
-curl http://localhost:8888/events --verbose
+curl http://localhost:8888/events/a --verbose
+```
+
+Leggere messaggi ricevuti di tipo: **_TIPE-B_** (notifce a different port: **8888**!):
+
+```
+curl http://localhost:8888/events/b --verbose
 ```
 
 Expected result can be seen below. Remember that it takes time to publish and read domain events from Kafka. Hence a Events might be not immedietly seen:
@@ -99,15 +113,27 @@ Expected result can be seen below. Remember that it takes time to publish and re
 
 Testa l'invio e la ricezione di Eventi tramite Kafka senza con filtri tramite il topic **events**, la versione helper ha le stesse funzionalità ma utilizza la libreria **events-helper**
 
+### Simple Events Condition
+
 Code can be found under:
 
 -   [simple-events-condition](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition) Module
--   [simple-events-condition-helper](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition-helper) Module.
 
 Contiene due servizi:
 
 -   [simple-events-condition-source](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition/simple-events-condition-source): Event Producer, produce eventi con Type: [TYPE-A|TYPE-B|TYPE-OTHER]
 -   [simple-events-condition-sink](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition/simple-events-condition-sink): Event Consumer, consuma solo eventi di tipo [TYPE-A|TYPE-B] mentre scarta gli altri
+
+### Simple Events Condition Helper
+
+Code can be found under:
+
+-   [simple-events-condition-helper](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition-helper) Module.
+
+Contiene due servizi:
+
+-   [simple-events-condition-source-helper](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition-helper/simple-events-condition-source-helper): Event Producer, produce eventi con Type: [TYPE-A|TYPE-B|TYPE-OTHER]
+-   [simple-events-condition-sink-helper](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition-helper/simple-events-condition-sink-helper): Event Consumer, consuma solo eventi di tipo [TYPE-A|TYPE-B] mentre scarta gli altri
 
 Additional components:
 

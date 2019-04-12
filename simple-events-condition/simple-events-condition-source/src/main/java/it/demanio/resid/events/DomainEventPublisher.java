@@ -4,4 +4,6 @@ public interface DomainEventPublisher {
 
 	void publish(DomainEvent event);
 
+	void publish(EventHeader header, Object domainEvent);
+
 }

@@ -7,16 +7,11 @@ import lombok.Data;
 
 @Data
 public class EventReceived<T> {
-	Instant receivedAt;
+	final Instant receivedAt = Instant.now();
 	Instant timestamp;
 	T payload;
-	String sender;
 
 	public String getLatency() {
 		return Duration.between(timestamp, receivedAt).toMillis() + "(ms)";
-	}
-
-	public void received() {
-		this.receivedAt = Instant.now();
 	}
 }

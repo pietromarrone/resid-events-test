@@ -1,18 +1,25 @@
 package it.demanio.resid.events;
 
+import java.time.Instant;
+
 import com.resid.events.Event;
+import com.resid.events.EventHeader;
+import com.resid.events.EventHeaderBuilder;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 @Getter
 @ToString
-public class EventB extends Event<String> {
+@RequiredArgsConstructor
+public class EventB extends Event {
 
-	private String sender = "SimpleConsumerConditionSource";
+	private EventHeader header = EventHeaderBuilder.headerBuilder() //
+			.eventType("TYPE-B") //
+			.sender("SimpleConsumerConditionSource") //
+			.build();
 
-	public EventB(String text) {
-		super("TYPE-B", text);
-	}
-
+	private final Instant timestamp = Instant.now();
+	private final String text;
 }

@@ -1,32 +1,21 @@
 package it.demanio.resid.events;
 
 import java.time.Instant;
-import java.util.UUID;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 @Getter
 @ToString
-@EqualsAndHashCode
+@RequiredArgsConstructor
 public class EventB implements DomainEvent {
 
-	private String id;
-	private UUID eventId;
-	private Instant producedAt;
-	private String text;
-	private String sender = "SimpleConsumerConditionSource";
+	private EventHeader header = EventHeaderBuilder.headerBuilder() //
+			.eventType("TYPE-B") //
+			.sender("SimpleConsumerConditionSource") //
+			.build();
 
-	public EventB(UUID eventId, String text) {
-		this.id = UUID.randomUUID().toString();
-		this.eventId = eventId;
-		this.text = text;
-		this.producedAt = Instant.now();
-	}
-
-	@Override
-	public String getType() {
-		return "TYPE-B";
-	}
+	private final Instant timestamp = Instant.now();
+	private final String text;
 }
