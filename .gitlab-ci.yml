@@ -1,0 +1,83 @@
+image: docker:git
+
+stages:
+  - build
+  - test
+  - package
+#   - deploy
+
+before_script:
+  - echo $MAVEN_SETTINGS > $HOME/.m2/settings.xml
+
+maven-compile-8:
+  image: maven:3-jdk-8-alpine
+  stage: build
+  script:
+    - ./mvnw -q compile
+  artifacts:
+    paths:
+      - target/classes/
+      - target/generated-sources/
+    expire_in: 1 day
+
+maven-test-8:
+  image: maven:3-jdk-8-alpine
+  stage: test
+  script:
+    - ./mvnw -q test
+  artifacts:
+    #reports:
+    #    junit: target/surefire-reports/TEST-*.xml
+    paths:
+      - target/test-results
+    expire_in: 1 day
+
+package-8:
+  image: maven:3-jdk-8-alpine
+  stage: package
+  #only:
+  #  - tags
+  script:
+    - ./mvnw -q package
+  artifacts:
+    paths:
+      - target/*.war
+    expire_in: 7 day
+
+maven-compile-11:
+  image: maven:3-jdk-11-slim
+  stage: build
+  script:
+    - ./mvnw -q compile
+  artifacts:
+    paths:
+      - target/classes/
+      - target/generated-sources/
+    expire_in: 1 day
+  allow_failure: true
+
+maven-test-11:
+  image: maven:3-jdk-11-slim
+  stage: test
+  script:
+    - ./mvnw -q test
+  artifacts:
+    #reports:
+    #    junit: target/surefire-reports/TEST-*.xml
+    paths:
+      - target/test-results
+    expire_in: 1 day
+  allow_failure: true
+
+package-11:
+  image: maven:3-jdk-11-slim
+  stage: package
+  #only:
+  #  - tags
+  script:
+    - ./mvnw -q package
+  artifacts:
+    paths:
+      - target/*.war
+    expire_in: 7 day
+  allow_failure: true
