@@ -1,7 +1,5 @@
 package it.demanio.resid;
 
-import static it.demanio.resid.events.EventHeaderBuilder.headerBuilder;
-
 import java.util.concurrent.TimeUnit;
 import java.util.stream.LongStream;
 
@@ -21,6 +19,7 @@ import it.demanio.resid.events.DomainEventPublisher;
 import it.demanio.resid.events.EventA;
 import it.demanio.resid.events.EventB;
 import it.demanio.resid.events.EventHeader;
+import it.demanio.resid.events.EventHeaderBuilder;
 import it.demanio.resid.events.EventWithoutHeader;
 import lombok.extern.slf4j.Slf4j;
 
@@ -117,7 +116,7 @@ public class SimpleEventsConditionSourceApplication {
 		other.setCognome("Cognome " + eventDto.getText());
 		other.setCodiceFiscale("Codice Fiscale " + eventDto.getText());
 
-		EventHeader header = headerBuilder() //
+		EventHeader header = EventHeaderBuilder.headerBuilder() //
 				.eventType("TYPE-OTHER") //
 				.sender("SimpleConsumerConditionSource") //
 				.build();

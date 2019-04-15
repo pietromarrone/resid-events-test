@@ -22,13 +22,13 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @SpringBootApplication
 @Import(EventHandlerConfiguration.class)
-public class SimpleEventsConditionSinkApplication {
+public class SimpleEventsConditionSinkHelperApplication {
 
 	@Autowired
 	EventRepository eventRepository;
 
 	public static void main(String[] args) {
-		SpringApplication.run(SimpleEventsConditionSinkApplication.class, args);
+		SpringApplication.run(SimpleEventsConditionSinkHelperApplication.class, args);
 	}
 
 	// Event Consumer

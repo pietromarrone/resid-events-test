@@ -31,13 +31,13 @@ import lombok.extern.slf4j.Slf4j;
 @RestController
 @SpringBootApplication
 @Import(EventProducerConfiguration.class)
-public class SimpleEventsConditionSourceApplication {
+public class SimpleEventsConditionSourceHelperApplication {
 
 	@Autowired
 	DomainEventPublisher publisher;
 
 	public static void main(String[] args) {
-		SpringApplication.run(SimpleEventsConditionSourceApplication.class, args);
+		SpringApplication.run(SimpleEventsConditionSourceHelperApplication.class, args);
 	}
 
 	// Rest Controller
