@@ -4,7 +4,6 @@ stages:
   - build
   - test
   - package
-#   - deploy
 
 before_script:
   - echo $MAVEN_SETTINGS > $HOME/.m2/settings.xml
