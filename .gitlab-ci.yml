@@ -14,11 +14,6 @@ maven-compile-8:
   stage: build
   script:
     - ./mvnw -q compile
-  artifacts:
-    paths:
-      - target/classes/
-      - target/generated-sources/
-    expire_in: 1 day
 
 maven-test-8:
   image: maven:3-jdk-8-alpine
@@ -41,7 +36,10 @@ package-8:
     - ./mvnw -q package
   artifacts:
     paths:
-      - target/*.war
+      - simple-events/simple-events-sink/target/*.jar
+      - simple-events/simple-events-source/target/*.jar
+      - simple-events-condition/simple-events-condition-sink/target/*.jar
+      - simple-events-condition/simple-events-condition-sink/target/*.jar
     expire_in: 7 day
 
 maven-compile-11:
@@ -49,11 +47,6 @@ maven-compile-11:
   stage: build
   script:
     - ./mvnw -q compile
-  artifacts:
-    paths:
-      - target/classes/
-      - target/generated-sources/
-    expire_in: 1 day
   allow_failure: true
 
 maven-test-11:
@@ -78,6 +71,9 @@ package-11:
     - ./mvnw -q package
   artifacts:
     paths:
-      - target/*.war
+      - simple-events/simple-events-sink/target/*.jar
+      - simple-events/simple-events-source/target/*.jar
+      - simple-events-condition/simple-events-condition-sink/target/*.jar
+      - simple-events-condition/simple-events-condition-sink/target/*.jar
     expire_in: 7 day
   allow_failure: true
