@@ -9,13 +9,12 @@ import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.resid.events.annotation.EventHandler;
-import com.resid.events.configuration.EventHandlerConfiguration;
-
 import it.demanio.resid.events.EventReceived;
 import it.demanio.resid.events.EventRepository;
 import it.demanio.resid.events.PayloadOther;
 import it.demanio.resid.events.PayloadText;
+import it.demanio.resid.helper.spring.EventHandlerConfiguration;
+import it.demanio.resid.helper.spring.annotation.EventHandler;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j

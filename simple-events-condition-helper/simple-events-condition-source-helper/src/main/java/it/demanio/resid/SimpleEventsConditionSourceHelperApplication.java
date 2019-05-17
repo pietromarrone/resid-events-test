@@ -1,7 +1,5 @@
 package it.demanio.resid;
 
-import static com.resid.events.EventHeaderBuilder.headerBuilder;
-
 import java.util.concurrent.TimeUnit;
 import java.util.stream.LongStream;
 
@@ -16,15 +14,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.resid.events.DomainEvent;
-import com.resid.events.EventHeader;
-import com.resid.events.configuration.EventProducerConfiguration;
-import com.resid.events.publisher.DomainEventPublisher;
-
+import it.demanio.events.Header;
+import it.demanio.events.HeaderBuilder;
+import it.demanio.events.ResidEvent;
 import it.demanio.resid.dto.EventDto;
 import it.demanio.resid.events.EventA;
 import it.demanio.resid.events.EventB;
 import it.demanio.resid.events.EventWithoutHeader;
+import it.demanio.resid.helper.publisher.DomainEventPublisher;
+import it.demanio.resid.helper.spring.EventProducerConfiguration;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -50,7 +48,7 @@ public class SimpleEventsConditionSourceHelperApplication {
 	ResponseEntity<Void> sendOne(@RequestBody EventDto eventDto) {
 		log.info("publish: {}", eventDto);
 
-		DomainEvent e = eventFactory(eventDto);
+		ResidEvent e = eventFactory(eventDto);
 		if (e != null) {
 			log.info("Sending Event {}", e);
 			publisher.publish(e);
@@ -67,7 +65,7 @@ public class SimpleEventsConditionSourceHelperApplication {
 
 		new Thread(() -> {
 			LongStream.range(0, num).forEach(i -> {
-				DomainEvent e = eventFactory(eventDto);
+				ResidEvent e = eventFactory(eventDto);
 				if (e != null) {
 					log.info("Sending Event {}", e);
 					publisher.publish(e);
@@ -91,7 +89,7 @@ public class SimpleEventsConditionSourceHelperApplication {
 					TimeUnit.MILLISECONDS.sleep(sleep);
 				} catch (InterruptedException e) {
 				}
-				DomainEvent e = eventFactory(eventDto);
+				ResidEvent e = eventFactory(eventDto);
 				if (e != null) {
 					log.info("Sending Event {}", e);
 					publisher.publish(e);
@@ -104,7 +102,7 @@ public class SimpleEventsConditionSourceHelperApplication {
 		return ResponseEntity.ok().build();
 	}
 
-	private DomainEvent eventFactory(EventDto eventDto) {
+	private ResidEvent eventFactory(EventDto eventDto) {
 		switch (eventDto.getType()) {
 		case "TYPE-A":
 			return new EventA(eventDto.getText());
@@ -121,7 +119,7 @@ public class SimpleEventsConditionSourceHelperApplication {
 		other.setCognome("Cognome " + eventDto.getText());
 		other.setCodiceFiscale("Codice Fiscale " + eventDto.getText());
 
-		EventHeader header = headerBuilder() //
+		Header header = HeaderBuilder.builder() //
 				.eventType("TYPE-OTHER") //
 				.sender("SimpleConsumerConditionSource") //
 				.build();

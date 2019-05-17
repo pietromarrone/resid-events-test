@@ -2,10 +2,9 @@ package it.demanio.resid.events;
 
 import java.time.Instant;
 
-import com.resid.events.Event;
-import com.resid.events.EventHeader;
-import com.resid.events.EventHeaderBuilder;
-
+import it.demanio.events.Event;
+import it.demanio.events.Header;
+import it.demanio.events.HeaderBuilder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -15,7 +14,7 @@ import lombok.ToString;
 @RequiredArgsConstructor
 public class EventB extends Event {
 
-	private EventHeader header = EventHeaderBuilder.headerBuilder() //
+	private Header header = HeaderBuilder.builder() //
 			.eventType("TYPE-B") //
 			.sender("SimpleConsumerConditionSource") //
 			.build();
