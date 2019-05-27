@@ -10,13 +10,13 @@ What things you need to run the software:
 -   [docker-compose](https://docs.docker.com/compose/)
 -   [Postman collection](https://www.getpostman.com/collections/6071ab6ca5838d60f5d8): contiene tutti gli Endpoint
 
-Nella folder docker-compose trovi alcuni Docker file per task comuni, per lanciarli occorre:
+Nella folder docker-compose trovi alcuni task comuni; per lanciarli occorre:
 
 ```
     docker-compose -f docker-compose/[NOME-FILE.yml] up -d
 ```
 
--   [kafka-exposed](http://gitlab.demaniodg.it/RESID/tests/tree/master/docker-compose/kafka-exposed.yml) lancia Kafka e lo espone al Host sulla porta standard.
+-   [kafka-exposed](./docker-compose/kafka-exposed.yml) lancia Kafka e lo espone al Host sulla porta standard.
 
 Additional components:
 
@@ -34,9 +34,9 @@ Tutti i moduli possono essere buildati in una unica istruzione con:
 
 Nella cartella di ciascun singolo progetto:
 
--   [simple-events README](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events)
--   [simple-events-condition README](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition)
--   [simple-events-condition-helper README](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition-helper)
+-   [simple-events: README](./simple-events)
+-   [simple-events-condition: README](./simple-events-condition)
+-   [simple-events-condition-helper: README](./simple-events-condition-helper)
 
 ## Plain Spring boot
 
