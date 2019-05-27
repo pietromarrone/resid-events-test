@@ -34,9 +34,9 @@ Tutti i moduli possono essere buildati in una unica istruzione con:
 
 Nella cartella di ciascun singolo progetto:
 
--   [simple-events](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events)
--   [simple-events-condition](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition)
--   [simple-events-condition-helper](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition-helper)
+-   [README simple-events](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events)
+-   [README simple-events-condition](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition)
+-   [README simple-events-condition-helper](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition-helper)
 
 ## Plain Spring boot
 
