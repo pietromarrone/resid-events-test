@@ -1,4 +1,4 @@
-package it.demanio.resid;
+package com.demanio.resid;
 
 import java.util.concurrent.TimeUnit;
 import java.util.stream.LongStream;
@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.demanio.resid.dto.EventDto;
+import com.demanio.resid.events.EventA;
+import com.demanio.resid.events.EventB;
+import com.demanio.resid.events.EventWithoutHeader;
+
 import it.demanio.events.Header;
 import it.demanio.events.HeaderBuilder;
 import it.demanio.events.ResidEvent;
-import it.demanio.resid.dto.EventDto;
-import it.demanio.resid.events.EventA;
-import it.demanio.resid.events.EventB;
-import it.demanio.resid.events.EventWithoutHeader;
 import it.demanio.resid.helper.publisher.DomainEventPublisher;
 import it.demanio.resid.helper.spring.EventProducerConfiguration;
 import lombok.extern.slf4j.Slf4j;

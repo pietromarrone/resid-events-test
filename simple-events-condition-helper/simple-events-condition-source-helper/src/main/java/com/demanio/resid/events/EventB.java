@@ -1,4 +1,4 @@
-package it.demanio.resid.events;
+package com.demanio.resid.events;
 
 import java.time.Instant;
 
