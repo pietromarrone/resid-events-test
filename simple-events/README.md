@@ -9,19 +9,13 @@ Contiene due servizi:
 -   [simple-events-source](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events/simple-events-source): Event Producer
 -   [simple-events-sink](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events/simple-events-sink): Event Consumer
 
-Additional components:
-
--   [Apache Kafka](https://kafka.apache.org) for pub/sub for domain events
--   [Apache ZooKeeper](https://zookeeper.apache.org/) ZooKeeper is a centralized service for maintaining configuration information
--   [Spring Cloud Stream](https://cloud.spring.io/spring-cloud-stream/) to read/write messages from/to Kafka’s topic.
-
-## Pubblicare un evento:
+### Pubblicare un evento:
 
 ```
 curl localhost:8080/publish -X POST --header 'Content-Type: application/json' -d '{"text":"Evento Singolo"}' --verbose
 ```
 
-## Pubblicare più eventi:
+### Pubblicare più eventi:
 
 ```
 curl localhost:8080/publish/3 -X POST --header 'Content-Type: application/json' -d '{"text":"Evento Multiplo"}' --verbose

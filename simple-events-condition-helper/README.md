@@ -11,13 +11,7 @@ Contiene due servizi:
 -   [simple-events-condition-source-helper](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition-helper/simple-events-condition-source-helper): Event Producer, produce eventi con Type: [TYPE-A|TYPE-B|TYPE-OTHER]
 -   [simple-events-condition-sink-helper](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition-helper/simple-events-condition-sink-helper): Event Consumer, consuma solo eventi di tipo [TYPE-A|TYPE-B] mentre scarta gli altri
 
-Additional components:
-
--   [Apache Kafka](https://kafka.apache.org) for pub/sub for domain events
--   [Apache ZooKeeper](https://zookeeper.apache.org/) ZooKeeper is a centralized service for maintaining configuration information
--   [Spring Cloud Stream](https://cloud.spring.io/spring-cloud-stream/) to read/write messages from/to Kafka’s topic.
-
-Pubblicare un evento:
+### Pubblicare un evento:
 
 ```
 curl localhost:8080/publish -X POST --header 'Content-Type: application/json' -d '{"type":"TYPE-A","text":"Evento Singolo"}' --verbose
@@ -31,19 +25,19 @@ curl localhost:8080/publish -X POST --header 'Content-Type: application/json' -d
 curl localhost:8080/publish -X POST --header 'Content-Type: application/json' -d '{"type":"TYPE-OTHER","text":"Evento Singolo"}' --verbose
 ```
 
-Pubblicare più eventi:
+### Pubblicare più eventi:
 
 ```
 curl localhost:8080/publish/3 -X POST --header 'Content-Type: application/json' -d '{"type":"TYPE-A","text":"Evento Multiplo"}' --verbose
 ```
 
-Pubblicare più eventi con sleep (ms):
+### Pubblicare più eventi con sleep (ms):
 
 ```
 curl localhost:8080/publish/3/sleep/5000 -X POST --header 'Content-Type: application/json' -d '{"type":"TYPE-A","text":"Evento Multiplo con Sleep"}' --verbose
 ```
 
-Leggere messaggi ricevuti (notify a different port: **8888**!):
+### Leggere messaggi ricevuti (notify a different port: **8888**!):
 
 ```
 curl http://localhost:8888/events/a --verbose

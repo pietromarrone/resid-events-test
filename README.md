@@ -18,6 +18,12 @@ Nella folder docker-compose trovi alcuni Docker file per task comuni, per lancia
 
 -   [kafka-exposed](http://gitlab.demaniodg.it/RESID/tests/tree/master/docker-compose/kafka-exposed.yml) lancia Kafka e lo espone al Host sulla porta standard.
 
+Additional components:
+
+-   [Apache Kafka](https://kafka.apache.org) for pub/sub for domain events
+-   [Apache ZooKeeper](https://zookeeper.apache.org/) ZooKeeper is a centralized service for maintaining configuration information
+-   [Spring Cloud Stream](https://cloud.spring.io/spring-cloud-stream/) to read/write messages from/to Kafka’s topic.
+
 ## Getting Started
 
 Tutti i moduli possono essere buildati in una unica istruzione con:
