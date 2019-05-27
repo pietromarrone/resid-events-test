@@ -4,12 +4,12 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<artifactId>simple-events-condition-source-helper</artifactId>
+	<artifactId>simple-events-helper-condition-helper-source</artifactId>
 	<description>Demo project for Spring Boot</description>
 
 	<parent>
 		<groupId>it.demanio.resid</groupId>
-		<artifactId>simple-events-condition-helper</artifactId>
+		<artifactId>simple-events-helper-condition</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 

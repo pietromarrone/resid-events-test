@@ -5,14 +5,14 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>it.demanio.resid</groupId>
-	<artifactId>simple-events-condition-helper</artifactId>
+	<artifactId>simple-events-helper-condition</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
 
 	<properties>
 		<java.version>1.8</java.version>
 		<spring-cloud.version>Greenwich.SR1</spring-cloud.version>
-		<event-helper.version>1.0-SNAPSHOT</event-helper.version>
+		<event-helper.version>v1.1</event-helper.version>
 	</properties>
 
 	<modules>

@@ -5,28 +5,21 @@ services:
     build: ./simple-events-condition-sink
     ports:
       - 8888:8888
-    links:
-      - kafka
 
   source:
     build: ./simple-events-condition-source
     ports:
       - 8080:8080
-    links:
-      - kafka
 
   zookeeper:
-    image: debezium/zookeeper:0.8
-    ports:
-      - 2181:2181
-      - 2888:2888
-      - 3888:3888
+    image: zookeeper:3.4.14
+
   kafka:
-    image: debezium/kafka:0.8
+    image: wurstmeister/kafka:2.12-2.2.0
     ports:
       - 9092:9092
     links:
       - zookeeper
     environment:
-      - ZOOKEEPER_CONNECT=zookeeper:2181
-      - ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_ADVERTISED_HOST_NAME=kafka

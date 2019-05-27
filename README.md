@@ -32,6 +32,16 @@ Nella cartella di ciascun singolo progetto:
 -   [simple-events-condition](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition)
 -   [simple-events-condition-helper](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition-helper)
 
+## Plain Spring boot
+
+Tutte le app possono girare come eseguibili spring boot con la seguente istruzione
+
+```
+./mvnw spring-boot:run
+```
+
+## Docker
+
 Build Docker images:
 
 ```
@@ -94,13 +104,7 @@ curl localhost:8080/publish/3/sleep/5000 -X POST --header 'Content-Type: applica
 Leggere messaggi ricevuti di tipo: **_TIPE-A_** (notifce a different port: **8888**!):
 
 ```
-curl http://localhost:8888/events/a --verbose
-```
-
-Leggere messaggi ricevuti di tipo: **_TIPE-B_** (notifce a different port: **8888**!):
-
-```
-curl http://localhost:8888/events/b --verbose
+curl http://localhost:8888/events --verbose
 ```
 
 Expected result can be seen below. Remember that it takes time to publish and read domain events from Kafka. Hence a Events might be not immedietly seen:
@@ -158,19 +162,23 @@ curl localhost:8080/publish -X POST --header 'Content-Type: application/json' -d
 Pubblicare più eventi:
 
 ```
-curl localhost:8080/publish/3 -X POST --header 'Content-Type: application/json' -d '{"text":"Evento Multiplo"}' --verbose
+curl localhost:8080/publish/3 -X POST --header 'Content-Type: application/json' -d '{"type":"TYPE-A","text":"Evento Multiplo"}' --verbose
 ```
 
 Pubblicare più eventi con sleep (ms):
 
 ```
-curl localhost:8080/publish/3/sleep/5000 -X POST --header 'Content-Type: application/json' -d '{"text":"Evento Multiplo con Sleep"}' --verbose
+curl localhost:8080/publish/3/sleep/5000 -X POST --header 'Content-Type: application/json' -d '{"type":"TYPE-A","text":"Evento Multiplo con Sleep"}' --verbose
 ```
 
 Leggere messaggi ricevuti (notifce a different port: **8888**!):
 
 ```
-curl http://localhost:8888/events --verbose
+curl http://localhost:8888/events/a --verbose
+```
+
+```
+curl http://localhost:8888/events/b --verbose
 ```
 
 Expected result can be seen below. Remember that it takes time to publish and read domain events from Kafka. Hence a Events might be not immedietly seen:

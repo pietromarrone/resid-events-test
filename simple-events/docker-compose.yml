@@ -1,6 +1,16 @@
 version: '3.1'
 
 services:
+  simple-sink:
+    build: ./simple-events-sink
+    ports:
+      - 8888:8888
+
+  simple-source:
+    build: ./simple-events-source
+    ports:
+      - 8080:8080
+
   zookeeper:
     image: zookeeper:3.4.14
 
