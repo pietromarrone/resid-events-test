@@ -2,14 +2,10 @@
 
 Testa l'invio e la ricezione di Eventi tramite Kafka senza con filtri tramite il topic **events**
 
-Code can be found under:
-
--   [simple-events-condition](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition) Module
-
 Contiene due servizi:
 
--   [simple-events-condition-source](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition/simple-events-condition-source): Event Producer, produce eventi con Type: [TYPE-A|TYPE-B|TYPE-OTHER]
--   [simple-events-condition-sink](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events-condition/simple-events-condition-sink): Event Consumer, consuma solo eventi di tipo [TYPE-A|TYPE-B] mentre scarta gli altri
+-   [simple-events-condition-source](./simple-events-condition-source): Event Producer, produce eventi con Type: [TYPE-A|TYPE-B|TYPE-OTHER]
+-   [simple-events-condition-sink](./simple-events-condition-sink): Event Consumer, consuma solo eventi di tipo [TYPE-A|TYPE-B] mentre scarta gli altri
 
 ### Pubblicare un evento:
 

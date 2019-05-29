@@ -2,12 +2,10 @@
 
 Testa l'invio e la ricezione di Eventi tramite Kafka senza alcun filtro tramite il topic **events**
 
-Code can be found under [simple-events](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events) Module.
-
 Contiene due servizi:
 
--   [simple-events-source](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events/simple-events-source): Event Producer
--   [simple-events-sink](http://gitlab.demaniodg.it/RESID/tests/tree/master/simple-events/simple-events-sink): Event Consumer
+-   [simple-events-source](./simple-events-source): Event Producer
+-   [simple-events-sink](./simple-events-sink): Event Consumer
 
 ### Pubblicare un evento:
 

@@ -1,6 +1,6 @@
 # Tests
 
-Una serie di servizi minimali, destinati a testare specifici aspetti, magari critici, della architettura Resid
+Una serie di servizi minimali, destinati a testare specifici aspetti, critici, della architettura Resid
 
 ### Prerequisites
 
@@ -32,11 +32,11 @@ Tutti i moduli possono essere buildati in una unica istruzione con:
 ./mvnw package
 ```
 
-Nella cartella di ciascun singolo progetto:
+Leggi il README Nella cartella di ciascun singolo progetto:
 
--   [simple-events: README](./simple-events)
--   [simple-events-condition: README](./simple-events-condition)
--   [simple-events-condition-helper: README](./simple-events-condition-helper)
+-   [simple-events](./simple-events)
+-   [simple-events-condition](./simple-events-condition)
+-   [simple-events-condition-helper](./simple-events-condition-helper)
 
 ## Plain Spring boot
 
@@ -47,6 +47,8 @@ Tutte le app possono girare come eseguibili spring boot con la seguente istruzio
 ```
 
 ## Docker
+
+Puoi creare le docker images:
 
 Build Docker images:
 
