@@ -4,8 +4,8 @@ Testa l'invio e la ricezione di Eventi tramite Kafka senza con filtri tramite il
 
 Contiene due servizi:
 
--   [simple-events-condition-source-helper](./simple-events-condition-helper/simple-events-condition-source-helper): Event Producer, produce eventi con Type: [TYPE-A|TYPE-B|TYPE-OTHER]
--   [simple-events-condition-sink-helper](./simple-events-condition-helper/simple-events-condition-sink-helper): Event Consumer, consuma solo eventi di tipo [TYPE-A|TYPE-B] mentre scarta gli altri
+-   [simple-events-condition-source-helper](./simple-events-condition-source-helper): Event Producer, produce eventi con Type: [TYPE-A|TYPE-B|TYPE-OTHER]
+-   [simple-events-condition-sink-helper](./simple-events-condition-sink-helper): Event Consumer, consuma solo eventi di tipo [TYPE-A|TYPE-B] mentre scarta gli altri
 
 ### Pubblicare un evento:
 
