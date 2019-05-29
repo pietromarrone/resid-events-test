@@ -1,4 +1,4 @@
-## Simple Events Condition & Simple Events Condition Helper
+## Simple Events Condition Helper
 
 Testa l'invio e la ricezione di Eventi tramite Kafka senza con filtri tramite il topic **events**, la versione helper ha le stesse funzionalità ma utilizza la libreria **events-helper**
 
