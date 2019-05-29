@@ -1,12 +1,12 @@
 version: '3.1'
 
 services:
-  sink:
+  sink-condition-helper:
     build: ./simple-events-condition-sink-helper
     ports:
       - 8888:8888
 
-  source:
+  source-condition-helper:
     build: ./simple-events-condition-source-helper
     ports:
       - 8080:8080
