@@ -1,7 +1,0 @@
-server:
-  port: 8090
-  
-spring:
-  kafka:
-    bootstrap-servers: kafka:9092
-    topic: events

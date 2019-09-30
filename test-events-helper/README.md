@@ -1,4 +1,4 @@
-# Test Events Condition Helper
+# Test Events Helper
 
 Testa l'invio e la ricezione di Eventi tramite Kafka con filtri tramite il topic **events**, utilizzando la libreria **events-helper**
 
