@@ -34,9 +34,9 @@ Tutti i moduli possono essere buildati in una unica istruzione con:
 
 Leggi il README Nella cartella di ciascun singolo progetto:
 
--   [simple-events](./simple-events)
--   [simple-events-condition](./simple-events-condition)
--   [simple-events-condition-helper](./simple-events-condition-helper)
+-   [test-events-simple](./test-events-simple)
+-   [test-events-condition](./test-events-condition)
+-   [test-events-helper](./test-events-helper)
 
 ## Plain Spring boot
 
@@ -71,5 +71,5 @@ docker-compose up --build
 ancora per i più pigri
 
 ```
-./mvnw package && docker-compose up --build
+./mvnw package && ./docker-all.sh
 ```
