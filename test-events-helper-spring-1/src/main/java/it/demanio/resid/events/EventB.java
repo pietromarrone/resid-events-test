@@ -11,7 +11,7 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = false)
 public class EventB extends Event {
 
-  private final Header header = new Header("TYPE-B", "TestEventsHelper");
+  private final Header header = new Header("TYPE-B", "TestEventsHelperSpring1");
   private String text;
 
   public EventB() {

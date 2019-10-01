@@ -1,5 +1,5 @@
 server:
-  port: 8888
+  port: 8080
 
 spring:
   cloud:
@@ -10,8 +10,7 @@ spring:
       bindings:
         input:
           destination: events
-          contentType: application/json
-          group: sink
+          group: demo
         output:
           destination: events
-          contentType: application/json
+          group: demo

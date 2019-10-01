@@ -1,25 +1,27 @@
 package it.demanio.resid.events;
 
-import java.time.Instant;
+import java.math.BigDecimal;
 
 import it.demanio.events.Event;
 import it.demanio.events.Header;
-import it.demanio.events.HeaderBuilder;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
-@Getter
+@Data
 @ToString
-@RequiredArgsConstructor
+@EqualsAndHashCode(callSuper = false)
 public class EventA extends Event {
 
-	private Header header = HeaderBuilder.builder() //
-			.eventType("TYPE-A") //
-			.sender("SimpleConsumerConditionSource") //
-			.build();
+  private String text;
+  private BigDecimal numero = BigDecimal.TEN;
 
-	private final Instant timestamp = Instant.now();
-	private final String text;
+  public EventA() {
+    header = new Header("TYPE-A", "TestEventsHelper");
+  }
 
+  public EventA(String text) {
+    this();
+    this.text = text;
+  }
 }

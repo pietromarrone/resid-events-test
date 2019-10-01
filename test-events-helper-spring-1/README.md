@@ -1,6 +1,6 @@
-# Test Events Condition
+# Test Events Helper
 
-Testa l'invio e la ricezione di Eventi tramite Kafka con filtri tramite il topic **events**
+Testa l'invio e la ricezione di Eventi tramite Kafka con filtri tramite il topic **events**, utilizzando la libreria **events-helper**
 
 -   Event Producer, produce eventi con Type: [TYPE-A|TYPE-B|TYPE-OTHER]
 -   Event Consumer, consuma solo eventi di tipo [TYPE-A|TYPE-B] mentre scarta gli altri

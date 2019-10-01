@@ -1,5 +1,7 @@
 package it.demanio.resid.events;
 
+import java.math.BigDecimal;
+
 import it.demanio.events.Event;
 import it.demanio.events.Header;
 import lombok.Data;
@@ -9,15 +11,16 @@ import lombok.ToString;
 @Data
 @ToString
 @EqualsAndHashCode(callSuper = false)
-public class EventB extends Event {
+public class EventA extends Event {
 
-  private final Header header = new Header("TYPE-B", "TestEventsHelper");
   private String text;
+  private BigDecimal numero = BigDecimal.TEN;
 
-  public EventB() {
+  public EventA() {
+    header = new Header("TYPE-A", "TestEventsHelperSpring1");
   }
 
-  public EventB(String text) {
+  public EventA(String text) {
     this();
     this.text = text;
   }

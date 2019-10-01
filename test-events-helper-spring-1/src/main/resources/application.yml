@@ -1,0 +1,7 @@
+server:
+  port: 8888
+
+kafka:
+  bootstrap-servers: kafka:9092
+  topic: events
+  groupId: demo2

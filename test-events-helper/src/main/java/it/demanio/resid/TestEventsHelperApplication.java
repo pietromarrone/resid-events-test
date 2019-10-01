@@ -7,7 +7,6 @@ import java.util.stream.LongStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Import;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.demanio.events.Header;
-import it.demanio.events.HeaderBuilder;
 import it.demanio.events.ResidEvent;
 import it.demanio.resid.dto.EventDto;
 import it.demanio.resid.events.EventA;
@@ -27,18 +25,13 @@ import it.demanio.resid.events.EventWithoutHeader;
 import it.demanio.resid.events.PayloadOther;
 import it.demanio.resid.events.PayloadText;
 import it.demanio.resid.helper.publisher.DomainEventPublisher;
-import it.demanio.resid.helper.spring.EventHandlerConfiguration;
-import it.demanio.resid.helper.spring.EventProducerConfiguration;
 import it.demanio.resid.helper.spring.annotation.EventHandler;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
 @SpringBootApplication
-
-//TODO Provare@Import(Helper.class) 
-@Import({ EventHandlerConfiguration.class, EventProducerConfiguration.class })
-public class SimpleEventsHelperApplication {
+public class TestEventsHelperApplication {
 
   @Autowired
   EventRepository eventRepository;
@@ -47,7 +40,7 @@ public class SimpleEventsHelperApplication {
   DomainEventPublisher publisher;
 
   public static void main(String[] args) {
-    SpringApplication.run(SimpleEventsHelperApplication.class, args);
+    SpringApplication.run(TestEventsHelperApplication.class, args);
   }
 
   // Event Consumer
@@ -176,10 +169,7 @@ public class SimpleEventsHelperApplication {
     other.setCognome("Cognome " + eventDto.getText());
     other.setCodiceFiscale("Codice Fiscale " + eventDto.getText());
 
-    Header header = HeaderBuilder.builder() //
-        .eventType("TYPE-OTHER") //
-        .sender("SimpleConsumerConditionSource") //
-        .build();
+    Header header = new Header("TYPE-OTHER", "SimpleConsumerConditionSource");
 
     log.info("Sending Event {} with Header {}", other, header);
     publisher.publish(header, other);

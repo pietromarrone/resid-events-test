@@ -15,5 +15,6 @@
         <module>test-events-simple</module>
         <module>test-events-condition</module>
         <module>test-events-helper</module>
+        <module>test-events-helper-spring-1</module>
     </modules>
 </project>
