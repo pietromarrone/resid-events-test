@@ -20,7 +20,7 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<spring-cloud.version>Greenwich.SR1</spring-cloud.version>
-		<event-helper-spring.version>v1.2</event-helper-spring.version>
+		<event-helper-spring.version>0.0.1-SNAPSHOT</event-helper-spring.version>
 	</properties>
 
 	<repositories>

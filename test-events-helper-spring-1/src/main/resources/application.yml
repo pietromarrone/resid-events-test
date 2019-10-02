@@ -4,4 +4,4 @@ server:
 kafka:
   bootstrap-servers: kafka:9092
   topic: events
-  groupId: demo2
+  groupId: demo

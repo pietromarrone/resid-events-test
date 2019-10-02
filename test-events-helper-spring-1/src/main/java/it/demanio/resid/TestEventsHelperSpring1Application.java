@@ -3,8 +3,10 @@ package it.demanio.resid;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.ResponseEntity;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.messaging.Message;
@@ -20,11 +22,13 @@ import it.demanio.resid.events.EventA;
 import it.demanio.resid.events.EventB;
 import it.demanio.resid.events.EventRepository;
 import it.demanio.resid.helper.publisher.DomainEventPublisher;
+import it.demanio.resid.helper.spring.EventHelperFullConfiguration;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
 @SpringBootApplication
+@Import(EventHelperFullConfiguration.class)
 public class TestEventsHelperSpring1Application {
 
   @Autowired
@@ -36,6 +40,12 @@ public class TestEventsHelperSpring1Application {
   public static void main(String[] args) {
     SpringApplication.run(TestEventsHelperSpring1Application.class, args);
   }
+
+  @Value("${kafka.bootstrap-servers}")
+  private String bootstrapAddress;
+
+  @Value("${kafka.groupId}")
+  private String groupId;
 
   @KafkaListener(topics = "${kafka.topic}")
   public void consume(Message<String> message) {
